@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_sample/page_2.dart';
 
 void main() {
   runApp(MyApp());
@@ -54,11 +55,25 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            Hero(
+              tag: ValueKey('Hero-1'),
+              child: Image.asset(
+                'res/images/netflix_logo.png',
+                height: 96.0,
+              ),
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return Page2();
+            }),
+          );
+        },
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
