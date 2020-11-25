@@ -29,11 +29,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  bool z = true;
 
   void _incrementCounter() {
     setState(() {
-      _counter++;
+      z = !z;
     });
   }
 
@@ -44,15 +44,24 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            AnimatedPositioned(
+              right: z ? 0 : 200,
+              left: z ? 200 : 0,
+              top: MediaQuery.of(context).size.height * 0.5,
+              onEnd: () {
+                print('done');
+              },
+              child: Container(
+                width: 50,
+                height: 40,
+                decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+              ),
+              duration: const Duration(milliseconds: 2500),
+              curve: Curves.bounceOut,
             ),
           ],
         ),
