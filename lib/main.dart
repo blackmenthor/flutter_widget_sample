@@ -29,38 +29,57 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  List<String> _list = List.generate(5, (i) => "${i}");
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+        title: Text(
+          'Flutter Widget Sample',
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+      body: ReorderableListView(
+        padding: EdgeInsets.symmetric(
+          horizontal: 16.0,
+        ),
+        children: _list
+            .map((String string) => Padding(
+                  key: Key(
+                    _list[_list.indexOf(string)],
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8.0,
+                  ),
+                  child: ListTile(
+                    tileColor: _list.indexOf(string) % 2 == 0
+                        ? Colors.blue
+                        : Colors.red,
+                    title: Text(
+                      string,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ))
+            .toList(),
+        onReorder: (oldIndex, newIndex) {
+          String old = _list[oldIndex];
+          if (oldIndex > newIndex) {
+            for (int i = oldIndex; i > newIndex; i--) {
+              _list[i] = _list[i - 1];
+            }
+            _list[newIndex] = old;
+          } else {
+            for (int i = oldIndex; i < newIndex - 1; i++) {
+              _list[i] = _list[i + 1];
+            }
+            _list[newIndex - 1] = old;
+          }
+          setState(() {});
+        },
       ),
     );
   }
