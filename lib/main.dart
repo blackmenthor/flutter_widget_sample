@@ -29,11 +29,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  bool z = true;
 
   void _incrementCounter() {
     setState(() {
-      _counter++;
+      z = !z;
     });
   }
 
@@ -44,19 +44,19 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
+          child: AnimatedSwitcher(
+        child: z
+            ? Container(
+                height: 100.0,
+                width: 100.0,
+                color: Colors.red,
+              )
+            : Image.asset(
+                'res/images/netflix_logo.png',
+                height: 100.0,
+              ),
+        duration: Duration(milliseconds: 1500),
+      )),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
