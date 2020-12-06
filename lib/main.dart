@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_sample/location_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,26 +42,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-        centerTitle: true,
-      ),
-      body: Container(
-        child: Center(
-          child: IconButton(
-            iconSize: 150,
-            splashColor: Colors.greenAccent,
-            icon: AnimatedIcon(
-              icon: AnimatedIcons.play_pause,
-              progress: _animationController,
-              color: Colors.greenAccent,
-            ),
-            onPressed: () => _handleOnPressed(),
-          ),
-        ),
-      ),
-    );
+    return LocationPage();
   }
 
   void _handleOnPressed() {
